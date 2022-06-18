@@ -30,6 +30,10 @@ public class Meteorite {
         return this.direction;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public PImage getSprite() {
         return this.sprite;
     } 

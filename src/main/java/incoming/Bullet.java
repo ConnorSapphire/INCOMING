@@ -30,6 +30,10 @@ public class Bullet {
         return this.direction;
     }
 
+    public void setSpeed() {
+        this.speed = speed;
+    }
+
     public PImage getSprite() {
         return this.sprite;
     } 

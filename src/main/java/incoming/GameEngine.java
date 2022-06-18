@@ -23,6 +23,8 @@ public class GameEngine {
 
     private int frames;
 
+    private boolean paused;
+
     public GameEngine() {
         this.player = Planet.player;
         this.meteorites = new ArrayList<Meteorite>();
@@ -33,6 +35,7 @@ public class GameEngine {
         this.meteoriteTimer = 0;
         this.meteoriteSpeed = 2;
         this.frames = 0;
+        this.paused = false;
     }
 
     public Planet getPlayer() {
@@ -45,6 +48,30 @@ public class GameEngine {
 
     public ArrayList<Explosion> getExplosions() {
         return this.explosions;
+    }
+
+    public void pause() {
+        for (Meteorite meteorite : this.meteorites) {
+            meteorite.setSpeed(0);
+        }
+        for (Bullet bullet : this.player.getBullets()) {
+            bullet.setSpeed(0);
+        }
+        this.paused = true;
+    }
+
+    public void resume() {
+        for (Meteorite meteorite : this.meteorites) {
+            meteorite.setSpeed(this.meteoriteSpeed);
+        }
+        for (Bullet bullet : this.player.getBullets()) {
+            bullet.setSpeed(this.player.getBulletSpeed());
+        }
+        this.paused = false;
+    }
+
+    public boolean isPaused() {
+        return this.paused;
     }
 
     public void draw(PApplet app) {

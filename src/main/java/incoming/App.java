@@ -156,6 +156,13 @@ public class App extends PApplet {
             if (keyCode == UP) {
                 game.getPlayer().shoot();
             }
+            if (keyCode == ESCAPE) {
+                if (game.isPaused()) {
+                    game.resume();
+                } else {
+                    game.pause();
+                }
+            }
         }
     }
 
