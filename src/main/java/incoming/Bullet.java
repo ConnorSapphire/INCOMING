@@ -30,7 +30,7 @@ public class Bullet {
         return this.direction;
     }
 
-    public void setSpeed() {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 

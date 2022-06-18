@@ -57,6 +57,7 @@ public class GameEngine {
         for (Bullet bullet : this.player.getBullets()) {
             bullet.setSpeed(0);
         }
+        // TODO Stop meteorites spawning
         this.paused = true;
     }
 
