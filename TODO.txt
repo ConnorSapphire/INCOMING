@@ -1,0 +1,11 @@
+- GameEngine.PLANETRADIUS = ???;
+- GameEngine.METEORRADIUS = ???;
+- GameEngine.BULLETRADIUS = ???;
+- GameEngine.EXPLOSIONRADIUS = ???; - Might or might not need
+
+- Explosion animation
+- Meteorite animation
+- Lives GUI art
+- Game Over
+- Menu:		- Start - How To - Credits
+- Pause:	- Play - Menu
