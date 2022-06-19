@@ -24,6 +24,7 @@ public class GameEngine {
     private int frames;
 
     private boolean paused;
+    private boolean menu;
 
     public GameEngine() {
         this.player = Planet.player;
@@ -35,7 +36,8 @@ public class GameEngine {
         this.meteoriteTimer = 0;
         this.meteoriteSpeed = 2;
         this.frames = 0;
-        this.paused = false;
+        this.paused = true;
+        this.menu = true;
     }
 
     public Planet getPlayer() {
@@ -70,10 +72,19 @@ public class GameEngine {
         }
         this.meteoriteDelay = (int) (Math.random() * this.maxDelay) + this.minDelay;
         this.paused = false;
+        this.menu = true;
+    }
+
+    public void menu() {
+        this.menu = true;
     }
 
     public boolean isPaused() {
         return this.paused;
+    }
+
+    public boolean isMenu() {
+        return this.menu;
     }
 
     public void draw(PApplet app) {
