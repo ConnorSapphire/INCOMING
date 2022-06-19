@@ -102,7 +102,7 @@ public class App extends PApplet {
     public void animateExplosion() {
         ArrayList<Explosion> explosions = this.game.getExplosions();
         if (this.explosionAnimationTimer >= 30) {
-            this.meteoriteAnimationTimer = 0;
+            this.explosionAnimationTimer = 0;
         }
         for (Explosion explosion : explosions) {
             if (this.explosionAnimationTimer < 5) {
