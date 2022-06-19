@@ -149,14 +149,16 @@ public class App extends PApplet {
 
     public void keyPressed() {
         if (key == CODED) {
-            if (keyCode == LEFT) {
-                game.getPlayer().rotateCounterClockwise();
-            }
-            if (keyCode == RIGHT) {
-                game.getPlayer().rotateClockwise();
-            }
-            if (keyCode == UP) {
-                game.getPlayer().shoot();
+            if (!game.isPaused()) {
+                if (keyCode == LEFT) {
+                    game.getPlayer().rotateCounterClockwise();
+                }
+                if (keyCode == RIGHT) {
+                    game.getPlayer().rotateClockwise();
+                }
+                if (keyCode == UP) {
+                    game.getPlayer().shoot();
+                }
             }
             if (keyCode == DOWN) {
                 if (game.isPaused()) {
