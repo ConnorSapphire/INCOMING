@@ -57,7 +57,7 @@ public class GameEngine {
         for (Bullet bullet : this.player.getBullets()) {
             bullet.setSpeed(0);
         }
-        // TODO Stop meteorites spawning
+        this.meteoriteDelay = (int) Double.POSITIVE_INFINITY;
         this.paused = true;
     }
 
@@ -68,6 +68,7 @@ public class GameEngine {
         for (Bullet bullet : this.player.getBullets()) {
             bullet.setSpeed(this.player.getBulletSpeed());
         }
+        this.meteoriteDelay = (int) (Math.random() * this.maxDelay) + this.minDelay;
         this.paused = false;
     }
 
