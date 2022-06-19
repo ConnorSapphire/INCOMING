@@ -88,13 +88,13 @@ public class App extends PApplet {
         if (this.meteoriteAnimationTimer >= 15) {
             this.meteoriteAnimationTimer = 0;
         }
-        for (Meteorite meteorite : meteorites) {
+        for (Meteorite m : meteorites) {
             if (this.meteoriteAnimationTimer < 5) {
-                meteorite.setSprite(this.meteorite.get(0));
+                m.setSprite(this.meteorite.get(0));
             } else if (this.meteoriteAnimationTimer < 10) {
-                meteorite.setSprite(this.meteorite.get(1));
+                m.setSprite(this.meteorite.get(1));
             } else if (this.meteoriteAnimationTimer < 15) {
-                meteorite.setSprite(this.meteorite.get(2));
+                m.setSprite(this.meteorite.get(2));
             }
         }
     }
@@ -132,12 +132,14 @@ public class App extends PApplet {
      * Draw all elements in the game by current frame. 
      */
     public void draw() {
-        this.planetAnimationTimer += 1;
-        this.animatePlanet();
-        this.meteoriteAnimationTimer += 1;
-        this.animateMeteorite();
-        this.explosionAnimationTimer += 1;
-        this.animateExplosion();
+        if (!game.isPaused()) {
+            this.planetAnimationTimer += 1;
+            this.animatePlanet();
+            this.meteoriteAnimationTimer += 1;
+            this.animateMeteorite();
+            this.explosionAnimationTimer += 1;
+            this.animateExplosion();
+        }
         this.setBulletSprites();
 
         background(71, 60, 120);
