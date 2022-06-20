@@ -136,6 +136,7 @@ public class App extends PApplet {
         ArrayList<Explosion> explosions = this.game.getExplosions();
         if (this.explosionAnimationTimer >= 30) {
             this.explosionAnimationTimer = 0;
+            game.resetExplosions();
         }
         for (Explosion explosion : explosions) {
             if (this.explosionAnimationTimer < 5) {
@@ -233,7 +234,12 @@ public class App extends PApplet {
     }
 
     public void drawCredits() {
-
+        background(71, 60, 120);
+        textFont(this.pFont, 32);
+        text("CREDITS", 0, -200);
+        textFont(this.pFont, 16);
+        textLeading(40);
+        text("Animation: Connor\nArt: Connor\nCode: Connor\nFont: NimaType\nhttps://www.fontspace.com/moonhouse-font-f18420\nGame Design: Connor\nMusic: ???\nSound Effects: ???", 0, 0);
     }
 
     /**

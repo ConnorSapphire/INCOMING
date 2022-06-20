@@ -56,6 +56,10 @@ public class GameEngine {
         return this.explosions;
     }
 
+    public void resetExplosions() {
+        this.explosions = new ArrayList<Explosion>();
+    }
+
     public int getScore() {
         return this.score;
     }
@@ -105,6 +109,11 @@ public class GameEngine {
         // Draw player
         this.player.draw(app);
 
+        // Draw explosions
+        for (Explosion explosion : this.explosions) {
+            explosion.draw(app);
+        }
+
         // Check collision
         ArrayList<Meteorite> removeMeteorites = new ArrayList<Meteorite>();
         ArrayList<Bullet> bullets = this.player.getBullets();
@@ -113,6 +122,7 @@ public class GameEngine {
             meteorite.tick();
             if (meteorite.getY() >= -50) {
                 removeMeteorites.add(meteorite);
+                this.explosions.add(new Explosion(meteorite.getX(), meteorite.getY(), meteorite.getDirection()));
                 player.takeDamage();
             }
             ArrayList<Bullet> removeBullets = new ArrayList<Bullet>();
@@ -121,6 +131,7 @@ public class GameEngine {
                     if ((bullet.getY() <= meteorite.getY() + ROTATIONINCREMENT) && (bullet.getY() >= meteorite.getY() - ROTATIONINCREMENT)) {
                         removeMeteorites.add(meteorite);
                         removeBullets.add(bullet);
+                        this.explosions.add(new Explosion(meteorite.getX(), meteorite.getY(), meteorite.getDirection()));
                         this.score += 1;
                     }
                 }
@@ -128,13 +139,6 @@ public class GameEngine {
             bullets.removeAll(removeBullets);
         }
         this.meteorites.removeAll(removeMeteorites);
-
-        // Calculate logic and draw explosions
-        ArrayList<Explosion> removeExplosions = new ArrayList<Explosion>();
-        for (Explosion explosion : this.explosions) {
-            explosion.draw(app);
-        }
-        this.explosions.removeAll(removeExplosions);
 
         // Initialise new meteorites
         this.meteoriteTimer += 1;
