@@ -258,9 +258,9 @@ public class App extends PApplet {
             this.animatePlanet();
             this.meteoriteAnimationTimer += 1;
             this.animateMeteorite();
-            this.explosionAnimationTimer += 1;
-            this.animateExplosion();
         }
+        this.explosionAnimationTimer += 1;
+        this.animateExplosion();
         this.setBulletSprites();
 
         fill(255,255,255);
