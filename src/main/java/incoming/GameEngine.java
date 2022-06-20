@@ -151,6 +151,27 @@ public class GameEngine {
             }
         }
 
+        // Draw player lives
+        if (!menu) {
+            if (player.getLives() == 3) {
+                app.image(player.getLifeSprite(), -280, -280);
+                app.image(player.getLifeSprite(), -260, -280);
+                app.image(player.getLifeSprite(), -240, -280);       
+            } else if (player.getLives() == 2) {
+                app.image(player.getLifeSprite(), -280, -280);
+                app.image(player.getLifeSprite(), -260, -280);
+                app.image(player.getLostLifeSprite(), -240, -280); 
+            } else if (player.getLives() == 1) {
+                app.image(player.getLifeSprite(), -280, -280);
+                app.image(player.getLostLifeSprite(), -260, -280);
+                app.image(player.getLostLifeSprite(), -240, -280); 
+            } else if (player.getLives() <= 0) {
+                app.image(player.getLostLifeSprite(), -280, -280);
+                app.image(player.getLostLifeSprite(), -260, -280);
+                app.image(player.getLostLifeSprite(), -240, -280); 
+            }
+        }
+
         // End game once out of lives
         if (player.getLives() <= 0) {
             this.pause();

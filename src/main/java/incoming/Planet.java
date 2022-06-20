@@ -17,6 +17,8 @@ public enum Planet {
     private ArrayList<Bullet> bullets;
     private PImage sprite;
     private int lives;
+    private PImage lifeSprite;
+    private PImage lostLifeSprite;
 
     Planet() {
         this.direction = 0;
@@ -29,7 +31,7 @@ public enum Planet {
         this.bullets = new ArrayList<Bullet>();
         this.lives = 3;
     }
-    
+
     public int getX() {
         return this.x;
     }
@@ -83,6 +85,22 @@ public enum Planet {
 
     public void setSprite(PImage sprite) {
         this.sprite = sprite;
+    }
+
+    public PImage getLifeSprite() {
+        return this.lifeSprite;
+    }
+
+    public void setLifeSprite(PImage lifeSprite) {
+        this.lifeSprite = lifeSprite;
+    }
+
+    public PImage getLostLifeSprite() {
+        return this.lostLifeSprite;
+    }
+
+    public void setLostLifeSprite(PImage lostLifeSprite) {
+        this.lostLifeSprite = lostLifeSprite;
     }
 
     public void draw(PApplet app) {

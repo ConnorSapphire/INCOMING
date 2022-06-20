@@ -27,6 +27,8 @@ public class App extends PApplet {
     public ArrayList<PImage> meteorite;
     public ArrayList<PImage> explosion;
     public PImage bullet;
+    public PImage life;
+    public PImage lostLife;
     public PImage button;
     public File fontFile;
     public Font font;
@@ -75,6 +77,8 @@ public class App extends PApplet {
         this.explosion.add(loadImage(this.getClass().getResource("explosion/explosion4.png").getPath()));
         this.explosion.add(loadImage(this.getClass().getResource("explosion/explosion5.png").getPath()));
         this.bullet = loadImage(this.getClass().getResource("bullet/bullet.png").getPath());
+        this.life = loadImage(this.getClass().getResource("life/life0.png").getPath());
+        this.lostLife = loadImage(this.getClass().getResource("life/life1.png").getPath());
         this.button = loadImage(this.getClass().getResource("button.png").getPath());
         imageMode(CENTER);
         
@@ -90,6 +94,8 @@ public class App extends PApplet {
         }
 
         // Assign sprites to existing objects
+        game.getPlayer().setLifeSprite(this.life);
+        game.getPlayer().setLostLifeSprite(this.lostLife);
         this.animatePlanet();
         this.animateMeteorite();
         this.animateExplosion();
