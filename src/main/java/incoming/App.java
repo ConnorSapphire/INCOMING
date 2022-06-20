@@ -39,6 +39,9 @@ public class App extends PApplet {
     public int explosionAnimationTimer;
     public int selectedButton;
 
+    private boolean howTo;
+    private boolean credits;
+
     public App() {
         this.game = new GameEngine();
         this.planet = new ArrayList<PImage>();
@@ -223,6 +226,14 @@ public class App extends PApplet {
         text("MENU", 0, 197);
     }
 
+    public void drawHowTo() {
+
+    }
+
+    public void drawCredits() {
+
+    }
+
     /**
      * Draw all elements in the game by current frame. 
      */
@@ -243,7 +254,11 @@ public class App extends PApplet {
         
         fill(255,255,255);
         textAlign(CENTER, CENTER);
-        if (game.isMenu()) {
+        if (howTo) {
+            drawHowTo();
+        } else if (credits) {
+            drawCredits();
+        } else if (game.isMenu()) {
             drawMenu();
         } else if (game.isOver()) {
             drawGameOver();
@@ -253,6 +268,12 @@ public class App extends PApplet {
     }
 
     public void keyPressed() {
+        if (howTo || credits) {
+            howTo = false;
+            credits = false;
+            this.selectedButton = 0;
+            return;
+        }
         if (!game.isPaused()) {
             if (keyCode == LEFT) {
                 game.getPlayer().rotateCounterClockwise();
@@ -271,7 +292,26 @@ public class App extends PApplet {
                 this.selectedButton += 1;
             }
             if (keyCode == 10) {
-                game.resume();
+                if (this.selectedButton == 0) {
+                    game.resume();
+                } else if (this.selectedButton == 1) {
+                    if (game.isMenu()) {
+                        howTo = true;
+                    } else {
+                        game = new GameEngine();
+                        game.getPlayer().reset();
+                        game.resume();
+                        this.selectedButton = 0;
+                    }
+                } else if (this.selectedButton == 2) {
+                    if (game.isMenu()) {
+                        credits = true;
+                    } else {
+                        game = new GameEngine();
+                        game.getPlayer().reset();
+                        this.selectedButton = 0;
+                    }
+                }
             }
             if (this.selectedButton < 0) {
                 this.selectedButton += 3;
@@ -282,12 +322,14 @@ public class App extends PApplet {
         if (!game.isOver()) {
             if (keyCode == DOWN) {
                 if (!game.isPaused()) {
+                    this.selectedButton = 0;
                     game.pause();
                 }
             }
         } else {
             game = new GameEngine();
             game.getPlayer().reset();
+            this.selectedButton = 0;
         }
     }
 
@@ -295,6 +337,7 @@ public class App extends PApplet {
         if (game.isOver()) {
             game = new GameEngine();
             game.getPlayer().reset();
+            this.selectedButton = 0;
         }
     }
 
