@@ -170,8 +170,8 @@ public class App extends PApplet {
         
         fill(255,255,255);
         textAlign(CENTER, CENTER);
-        textFont(this.pFont, 64);
         if (game.isMenu()) {
+            textFont(this.pFont, 64);
             text("INCOMING", 0, -110);
             textFont(this.pFont, 32);
             image(this.button, 0, 80);
@@ -184,7 +184,15 @@ public class App extends PApplet {
             textFont(this.pFont, 64);
             text("GAME OVER", 0, -110);
         } else if (game.isPaused()) {
-
+            textFont(this.pFont, 64);
+            text("PAUSED", 0, -110);
+            textFont(this.pFont, 32);
+            image(this.button, 0, 80);
+            text("RESUME", 0, 77);
+            image(this.button, 0, 140);
+            text("RESTART", 0, 137);
+            image(this.button, 0, 200);
+            text("MENU", 0, 197);
         }
     }
 
