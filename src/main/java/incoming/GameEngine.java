@@ -32,7 +32,7 @@ public class GameEngine {
         this.explosions = new ArrayList<Explosion>();
         this.maxDelay = 180;
         this.minDelay = 60;
-        this.meteoriteDelay = (int) (Math.random() * this.maxDelay) + this.minDelay;
+        this.meteoriteDelay = (int) Double.POSITIVE_INFINITY/*(Math.random() * this.maxDelay) + this.minDelay */;
         this.meteoriteTimer = 0;
         this.meteoriteSpeed = 2;
         this.frames = 0;
