@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
 import java.awt.FontFormatException;
-//import processing.data.JSONObject;
-//import processing.data.JSONArray;
-//import processing.core.PFont;
 
 public class App extends PApplet {
 
@@ -29,9 +26,16 @@ public class App extends PApplet {
     public PImage life;
     public PImage lostLife;
     public PImage button;
+
     public File fontFile;
     public Font font;
     public PFont pFont;
+
+    public Clip music;
+    public Clip select;
+    public Clip shoot;
+    public Clip hurt;
+    public Clip explode;
 
     public int planetAnimationTimer;
     public int meteoriteAnimationTimer;
@@ -61,11 +65,11 @@ public class App extends PApplet {
 
     /**
      * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
-     * @param file TODO
     */
     public void setup() {
+        
         frameRate(FPS);
-
+        
         // Load images during setup
 		this.planet.add(loadImage(this.getClass().getResource("planet/planet0.png").getPath()));
 		this.planet.add(loadImage(this.getClass().getResource("planet/planet1.png").getPath()));
@@ -94,6 +98,50 @@ public class App extends PApplet {
         } catch(FontFormatException | IOException e) {
             e.printStackTrace();
         }
+        
+        // Load sound effects and begin music playback
+        Mixer mixer = AudioSystem.getMixer(AudioSystem.getMixerInfo()[0]);
+        File musicFile = new File(this.getClass().getResource("sound/music.wav").getPath());
+        File selectFile = new File(this.getClass().getResource("sound/select.wav").getPath());
+        File shootFile = new File(this.getClass().getResource("sound/shoot.wav").getPath());
+        File hurtFile = new File(this.getClass().getResource("sound/hurt.wav").getPath());
+        File explodeFile = new File(this.getClass().getResource("sound/explode.wav").getPath());
+        this.music = null;
+        AudioInputStream musicStream = null;
+        this.select = null;
+        AudioInputStream selectStream = null;
+        this.shoot = null;
+        AudioInputStream shootStream = null;
+        this.hurt = null;
+        AudioInputStream hurtStream = null;
+        this.explode = null;
+        AudioInputStream explodeStream = null;
+        try {
+            this.music = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
+            musicStream = AudioSystem.getAudioInputStream(musicFile);
+            this.music.open(musicStream);
+            this.select = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
+            selectStream = AudioSystem.getAudioInputStream(selectFile);
+            this.select.open(selectStream);
+            this.shoot = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
+            shootStream = AudioSystem.getAudioInputStream(shootFile);
+            this.shoot.open(shootStream);
+            this.hurt = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
+            hurtStream = AudioSystem.getAudioInputStream(hurtFile);
+            this.hurt.open(hurtStream);
+            this.explode = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
+            explodeStream = AudioSystem.getAudioInputStream(explodeFile);
+            this.explode.open(explodeStream);
+        } catch(LineUnavailableException | UnsupportedAudioFileException | IOException e) {
+            e.printStackTrace();
+        }
+        this.music.loop((int) Double.POSITIVE_INFINITY);
+        this.select.loop(0);
+        this.shoot.loop(0);
+        this.explode.loop(0);
+        this.hurt.loop(0);
+        game.setExplodeClip(this.explode);
+        game.setHurtClip(this.hurt);
 
         // Assign sprites to existing objects
         game.getPlayer().setLifeSprite(this.life);
@@ -241,10 +289,10 @@ public class App extends PApplet {
     public void drawCredits() {
         background(71, 60, 120);
         textFont(this.pFont, 32);
-        text("CREDITS", 0, -200);
+        text("CREDITS", 0, -240);
         textFont(this.pFont, 16);
         textLeading(40);
-        text("Animation: Connor\nArt: Connor\nCode: Connor\nFont: NimaType\nhttps://www.fontspace.com/moonhouse-font-f18420\nGame Design: Connor\nMusic: ???\nSound Effects: ???", 0, 0);
+        text("Animation: Connor\nArt: Connor\nCode: Connor\nFont: NimaType\nhttps://www.fontspace.com/moonhouse-font-f18420\nGame Design: Connor\nMusic: Battle (Boss) by BoxCat Games\nhttps://freemusicarchive.org/music/BoxCat_Games\nSound Effects: Connor\nhttps://sfxr.me/", 0, 0);
         text("PRESS ANY KEY TO RETURN TO THE MENU",0,240);
     }
 
@@ -287,8 +335,11 @@ public class App extends PApplet {
             howTo = false;
             credits = false;
             this.selectedButton = 0;
+            this.select.flush();
+            this.select.loop(1);
             return;
         }
+
         if (!game.isPaused()) {
             if (keyCode == LEFT) {
                 game.getPlayer().rotateCounterClockwise();
@@ -298,6 +349,8 @@ public class App extends PApplet {
             }
             if (keyCode == UP) {
                 game.getPlayer().shoot();
+                this.shoot.flush();
+                this.shoot.loop(1);
             }
         } else {
             if (keyCode == UP) {
@@ -306,6 +359,12 @@ public class App extends PApplet {
             if (keyCode == DOWN) { 
                 this.selectedButton += 1;
             }
+            if (this.selectedButton < 0) {
+                this.selectedButton += 3;
+            } else if (this.selectedButton > 2) {
+                this.selectedButton -= 3;
+            }
+
             if (keyCode == 10) {
                 if (this.selectedButton == 0) {
                     game.resume();
@@ -327,13 +386,11 @@ public class App extends PApplet {
                         this.selectedButton = 0;
                     }
                 }
-            }
-            if (this.selectedButton < 0) {
-                this.selectedButton += 3;
-            } else if (this.selectedButton > 2) {
-                this.selectedButton -= 3;
+                this.select.flush();
+                this.select.loop(1);
             }
         }
+
         if (!game.isOver()) {
             if (keyCode == DOWN) {
                 if (!game.isPaused()) {
@@ -345,6 +402,8 @@ public class App extends PApplet {
             game = new GameEngine();
             game.getPlayer().reset();
             this.selectedButton = 0;
+            this.select.flush();
+            this.select.loop(1);
         }
     }
 

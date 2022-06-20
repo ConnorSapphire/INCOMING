@@ -1,6 +1,7 @@
 package incoming;
 
 import processing.core.PApplet;
+import javax.sound.sampled.*;
 import java.util.ArrayList;
 
 public class GameEngine {
@@ -23,6 +24,9 @@ public class GameEngine {
 
     private int frames;
     private int score;
+
+    private Clip hurt;
+    private Clip explode;
 
     private boolean paused;
     private boolean menu;
@@ -62,6 +66,14 @@ public class GameEngine {
 
     public int getScore() {
         return this.score;
+    }
+
+    public void setHurtClip(Clip hurt) {
+        this.hurt = hurt;
+    }
+
+    public void setExplodeClip(Clip explode) {
+        this.explode = explode;
     }
 
     public void pause() {
@@ -124,6 +136,8 @@ public class GameEngine {
                 removeMeteorites.add(meteorite);
                 this.explosions.add(new Explosion(meteorite.getX(), meteorite.getY(), meteorite.getDirection()));
                 player.takeDamage();
+                this.hurt.flush();
+                this.hurt.loop(1);
             }
             ArrayList<Bullet> removeBullets = new ArrayList<Bullet>();
             for (Bullet bullet : bullets) {
@@ -132,6 +146,8 @@ public class GameEngine {
                         removeMeteorites.add(meteorite);
                         removeBullets.add(bullet);
                         this.explosions.add(new Explosion(meteorite.getX(), meteorite.getY(), meteorite.getDirection()));
+                        this.explode.flush();
+                        this.explode.loop(1);
                         this.score += 1;
                     }
                 }
