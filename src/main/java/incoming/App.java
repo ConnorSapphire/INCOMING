@@ -230,7 +230,13 @@ public class App extends PApplet {
     }
 
     public void drawHowTo() {
-
+        background(71, 60, 120);
+        textFont(this.pFont, 32);
+        text("HOW TO PLAY", 0, -200);
+        textFont(this.pFont, 16);
+        textLeading(40);
+        text("Use the left and right arrow keys to rotate the planet.\nUse the up arrow key to fire a laser pulse.\nMeteorites will explode when shot, this will give you a point.\nThe planet takes damage each time a meteorite hits it.\nThe planet can only withstand three hits.\n\nPause the game by pressing the down arrow.", 0, 0);
+        text("PRESS ANY KEY TO RETURN TO THE MENU",0,240);
     }
 
     public void drawCredits() {
@@ -240,6 +246,7 @@ public class App extends PApplet {
         textFont(this.pFont, 16);
         textLeading(40);
         text("Animation: Connor\nArt: Connor\nCode: Connor\nFont: NimaType\nhttps://www.fontspace.com/moonhouse-font-f18420\nGame Design: Connor\nMusic: ???\nSound Effects: ???", 0, 0);
+        text("PRESS ANY KEY TO RETURN TO THE MENU",0,240);
     }
 
     /**
