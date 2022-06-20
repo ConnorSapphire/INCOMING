@@ -27,7 +27,7 @@ public class App extends PApplet {
     public ArrayList<PImage> meteorite;
     public ArrayList<PImage> explosion;
     public PImage bullet;
-    public ArrayList<PImage> space;
+    public PImage button;
     public File fontFile;
     public Font font;
     public PFont pFont;
@@ -41,7 +41,6 @@ public class App extends PApplet {
         this.planet = new ArrayList<PImage>();
         this.meteorite = new ArrayList<PImage>();
         this.explosion = new ArrayList<PImage>();
-        this.space = new ArrayList<PImage>();
         this.planetAnimationTimer = 0;
         this.meteoriteAnimationTimer = 0;
         this.explosionAnimationTimer = 0;
@@ -74,6 +73,7 @@ public class App extends PApplet {
         this.explosion.add(loadImage(this.getClass().getResource("explosion/explosion4.png").getPath()));
         this.explosion.add(loadImage(this.getClass().getResource("explosion/explosion5.png").getPath()));
         this.bullet = loadImage(this.getClass().getResource("bullet/bullet.png").getPath());
+        this.button = loadImage(this.getClass().getResource("button.png").getPath());
         imageMode(CENTER);
         
         // Load fonts
@@ -173,6 +173,8 @@ public class App extends PApplet {
         textFont(this.pFont, 32);
         if (game.isMenu()) {
             text("INCOMING", 0, -100);
+            image(this.button, 0, 100);
+            text("PLAY", 0, 97);
         } else if (game.isOver()) {
             textFont(this.pFont, 64);
             text("GAME OVER", 0, -110);
@@ -203,6 +205,10 @@ public class App extends PApplet {
                     }
                 }
             }
+        }
+        if (game.isOver()) {
+            game = new GameEngine();
+            game.getPlayer().reset();
         }
     }
 
