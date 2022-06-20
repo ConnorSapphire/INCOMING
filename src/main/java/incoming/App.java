@@ -4,7 +4,12 @@ import org.checkerframework.checker.units.qual.A;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PFont;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
+import java.awt.FontFormatException;
 //import processing.data.JSONObject;
 //import processing.data.JSONArray;
 //import processing.core.PFont;
@@ -23,6 +28,9 @@ public class App extends PApplet {
     public ArrayList<PImage> explosion;
     public PImage bullet;
     public ArrayList<PImage> space;
+    public File fontFile;
+    public Font font;
+    public PFont pFont;
 
     public int planetAnimationTimer;
     public int meteoriteAnimationTimer;
@@ -48,6 +56,7 @@ public class App extends PApplet {
 
     /**
      * Load all resources such as images. Initialise the elements such as the player, enemies and map elements.
+     * @param file TODO
     */
     public void setup() {
         frameRate(FPS);
@@ -67,6 +76,18 @@ public class App extends PApplet {
         this.bullet = loadImage(this.getClass().getResource("bullet/bullet.png").getPath());
         imageMode(CENTER);
         
+        // Load fonts
+        this.fontFile = new File(this.getClass().getResource("Moonhouse.ttf").getPath());
+        this.font = null;
+        this.pFont = null;
+        try {
+            this.font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+            this.pFont = new PFont(this.font, false);
+        } catch(FontFormatException | IOException e) {
+            e.printStackTrace();
+        }
+
+        // Assign sprites to existing objects
         this.animatePlanet();
         this.animateMeteorite();
         this.animateExplosion();
@@ -146,6 +167,13 @@ public class App extends PApplet {
         background(71, 60, 120);
         translate(App.WIDTH / 2, App.HEIGHT / 2);
         this.game.draw(this);
+
+        // TEMPORARY TEXT TO TEST FONT
+        fill(255,255,255);
+        textAlign(CENTER, CENTER);
+        textFont(this.pFont, 32);
+        text("INCOMING", 0, 0);
+        // END OF TEMPORARY TEXT
     }
 
     public void keyPressed() {
