@@ -105,7 +105,7 @@ public class GameEngine {
         for (Meteorite meteorite : this.meteorites) {
             meteorite.draw(app);
             meteorite.tick();
-            if (meteorite.getY() >= 0) {
+            if (meteorite.getY() >= -50) {
                 removeMeteorites.add(meteorite);
                 player.takeDamage();
             }

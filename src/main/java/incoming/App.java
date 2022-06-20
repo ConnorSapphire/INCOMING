@@ -170,11 +170,16 @@ public class App extends PApplet {
         
         fill(255,255,255);
         textAlign(CENTER, CENTER);
-        textFont(this.pFont, 32);
+        textFont(this.pFont, 64);
         if (game.isMenu()) {
-            text("INCOMING", 0, -100);
-            image(this.button, 0, 100);
-            text("PLAY", 0, 97);
+            text("INCOMING", 0, -110);
+            textFont(this.pFont, 32);
+            image(this.button, 0, 80);
+            text("START", 0, 77);
+            image(this.button, 0, 140);
+            text("HOW TO PLAY", 0, 137);
+            image(this.button, 0, 200);
+            text("CREDITS", 0, 197);
         } else if (game.isOver()) {
             textFont(this.pFont, 64);
             text("GAME OVER", 0, -110);
