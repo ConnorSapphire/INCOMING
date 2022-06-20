@@ -1,11 +1,10 @@
 package incoming;
 
-import org.checkerframework.checker.units.qual.A;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PFont;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
+import javax.sound.sampled.*;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
