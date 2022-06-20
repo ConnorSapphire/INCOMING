@@ -194,6 +194,8 @@ public class App extends PApplet {
     public void drawGameOver() {
         textFont(this.pFont, 64);
         text("GAME OVER", 0, -110);
+        textFont(this.pFont, 32);
+        text(String.format("Score: %d", game.getScore()), 0, 100);
     }
 
     public void drawPause() {
@@ -248,12 +250,13 @@ public class App extends PApplet {
         }
         this.setBulletSprites();
 
+        fill(255,255,255);
+        textAlign(CENTER, CENTER);
+        textFont(this.pFont, 32);
         background(71, 60, 120);
         translate(App.WIDTH / 2, App.HEIGHT / 2);
         this.game.draw(this);
         
-        fill(255,255,255);
-        textAlign(CENTER, CENTER);
         if (howTo) {
             drawHowTo();
         } else if (credits) {

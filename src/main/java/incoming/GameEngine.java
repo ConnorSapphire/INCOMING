@@ -22,6 +22,7 @@ public class GameEngine {
     private int meteoriteSpeed;
 
     private int frames;
+    private int score;
 
     private boolean paused;
     private boolean menu;
@@ -37,6 +38,7 @@ public class GameEngine {
         this.meteoriteTimer = 0;
         this.meteoriteSpeed = 2;
         this.frames = 0;
+        this.score = 0;
         this.paused = true;
         this.menu = true;
         this.gameOver = false;
@@ -52,6 +54,10 @@ public class GameEngine {
 
     public ArrayList<Explosion> getExplosions() {
         return this.explosions;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     public void pause() {
@@ -115,6 +121,7 @@ public class GameEngine {
                     if ((bullet.getY() <= meteorite.getY() + ROTATIONINCREMENT) && (bullet.getY() >= meteorite.getY() - ROTATIONINCREMENT)) {
                         removeMeteorites.add(meteorite);
                         removeBullets.add(bullet);
+                        this.score += 1;
                     }
                 }
             }
@@ -170,6 +177,11 @@ public class GameEngine {
                 app.image(player.getLostLifeSprite(), -260, -280);
                 app.image(player.getLostLifeSprite(), -240, -280); 
             }
+        }
+
+        // Draw score
+        if (!menu) {
+            app.text(String.format("Score: %d", this.score), 200, -280);
         }
 
         // End game once out of lives

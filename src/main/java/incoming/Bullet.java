@@ -45,7 +45,6 @@ public class Bullet {
     public void draw(PApplet app) {
         app.pushMatrix();
         app.rotate(app.radians(this.direction));
-        app.fill(0, 255, 0);
         app.image(this.sprite, this.x, this.y);
         app.popMatrix();
     }
