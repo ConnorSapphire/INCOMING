@@ -167,13 +167,18 @@ public class App extends PApplet {
         background(71, 60, 120);
         translate(App.WIDTH / 2, App.HEIGHT / 2);
         this.game.draw(this);
-
-        // TEMPORARY TEXT TO TEST FONT
+        
         fill(255,255,255);
         textAlign(CENTER, CENTER);
         textFont(this.pFont, 32);
-        text("INCOMING", 0, 0);
-        // END OF TEMPORARY TEXT
+        if (game.isMenu()) {
+            text("INCOMING", 0, -100);
+        } else if (game.isOver()) {
+            textFont(this.pFont, 64);
+            text("GAME OVER", 0, -110);
+        } else if (game.isPaused()) {
+
+        }
     }
 
     public void keyPressed() {
@@ -189,13 +194,22 @@ public class App extends PApplet {
                     game.getPlayer().shoot();
                 }
             }
-            if (keyCode == DOWN) {
-                if (game.isPaused()) {
-                    game.resume();
-                } else {
-                    game.pause();
+            if (!game.isOver()) {
+                if (keyCode == DOWN) {
+                    if (game.isPaused()) {
+                        game.resume();
+                    } else {
+                        game.pause();
+                    }
                 }
             }
+        }
+    }
+
+    public void mousePressed() {
+        if (game.isOver()) {
+            game = new GameEngine();
+            game.getPlayer().reset();
         }
     }
 

@@ -24,6 +24,12 @@ public enum Planet {
         this.lives = 3;
     }
 
+    public void reset() {
+        this.direction = 0;
+        this.bullets = new ArrayList<Bullet>();
+        this.lives = 3;
+    }
+    
     public int getX() {
         return this.x;
     }
