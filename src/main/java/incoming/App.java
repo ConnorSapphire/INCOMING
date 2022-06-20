@@ -35,6 +35,7 @@ public class App extends PApplet {
     public int planetAnimationTimer;
     public int meteoriteAnimationTimer;
     public int explosionAnimationTimer;
+    public int selectedButton;
 
     public App() {
         this.game = new GameEngine();
@@ -44,6 +45,7 @@ public class App extends PApplet {
         this.planetAnimationTimer = 0;
         this.meteoriteAnimationTimer = 0;
         this.explosionAnimationTimer = 0;
+        this.selectedButton = 0;
     }
 
     /**
@@ -150,6 +152,71 @@ public class App extends PApplet {
         }
     }
 
+    public void drawMenu() {
+        textFont(this.pFont, 64);
+        text("INCOMING", 0, -110);
+        textFont(this.pFont, 32);
+        if (this.selectedButton == 0) {
+            this.button.filter(INVERT);
+            image(this.button, 0, 80);
+            this.button.filter(INVERT);
+        } else {
+            image(this.button, 0, 80);
+        }
+        text("START", 0, 77);
+        if (this.selectedButton == 1) {
+            this.button.filter(INVERT);
+            image(this.button, 0, 140);
+            this.button.filter(INVERT);
+        } else {
+            image(this.button, 0, 140);
+        }
+        text("HOW TO PLAY", 0, 137);
+        if (this.selectedButton == 2) {
+            this.button.filter(INVERT);
+            image(this.button, 0, 200);
+            this.button.filter(INVERT);
+        } else {
+            image(this.button, 0, 200);
+        }
+        text("CREDITS", 0, 197);
+    }
+
+    public void drawGameOver() {
+        textFont(this.pFont, 64);
+        text("GAME OVER", 0, -110);
+    }
+
+    public void drawPause() {
+        textFont(this.pFont, 64);
+        text("PAUSED", 0, -110);
+        textFont(this.pFont, 32);
+        if (this.selectedButton == 0) {
+            this.button.filter(INVERT);
+            image(this.button, 0, 80);
+            this.button.filter(INVERT);
+        } else {
+            image(this.button, 0, 80);
+        }
+        text("RESUME", 0, 77);
+        if (this.selectedButton == 1) {
+            this.button.filter(INVERT);
+            image(this.button, 0, 140);
+            this.button.filter(INVERT);
+        } else {
+            image(this.button, 0, 140);
+        }
+        text("RESTART", 0, 137);
+        if (this.selectedButton == 2) {
+            this.button.filter(INVERT);
+            image(this.button, 0, 200);
+            this.button.filter(INVERT);
+        } else {
+            image(this.button, 0, 200);
+        }
+        text("MENU", 0, 197);
+    }
+
     /**
      * Draw all elements in the game by current frame. 
      */
@@ -171,55 +238,48 @@ public class App extends PApplet {
         fill(255,255,255);
         textAlign(CENTER, CENTER);
         if (game.isMenu()) {
-            textFont(this.pFont, 64);
-            text("INCOMING", 0, -110);
-            textFont(this.pFont, 32);
-            image(this.button, 0, 80);
-            text("START", 0, 77);
-            image(this.button, 0, 140);
-            text("HOW TO PLAY", 0, 137);
-            image(this.button, 0, 200);
-            text("CREDITS", 0, 197);
+            drawMenu();
         } else if (game.isOver()) {
-            textFont(this.pFont, 64);
-            text("GAME OVER", 0, -110);
+            drawGameOver();
         } else if (game.isPaused()) {
-            textFont(this.pFont, 64);
-            text("PAUSED", 0, -110);
-            textFont(this.pFont, 32);
-            image(this.button, 0, 80);
-            text("RESUME", 0, 77);
-            image(this.button, 0, 140);
-            text("RESTART", 0, 137);
-            image(this.button, 0, 200);
-            text("MENU", 0, 197);
+            drawPause();
         }
     }
 
     public void keyPressed() {
-        if (key == CODED) {
-            if (!game.isPaused()) {
-                if (keyCode == LEFT) {
-                    game.getPlayer().rotateCounterClockwise();
-                }
-                if (keyCode == RIGHT) {
-                    game.getPlayer().rotateClockwise();
-                }
-                if (keyCode == UP) {
-                    game.getPlayer().shoot();
-                }
+        if (!game.isPaused()) {
+            if (keyCode == LEFT) {
+                game.getPlayer().rotateCounterClockwise();
             }
-            if (!game.isOver()) {
-                if (keyCode == DOWN) {
-                    if (game.isPaused()) {
-                        game.resume();
-                    } else {
-                        game.pause();
-                    }
-                }
+            if (keyCode == RIGHT) {
+                game.getPlayer().rotateClockwise();
+            }
+            if (keyCode == UP) {
+                game.getPlayer().shoot();
+            }
+        } else {
+            if (keyCode == UP) {
+                this.selectedButton -= 1;
+            }
+            if (keyCode == DOWN) { 
+                this.selectedButton += 1;
+            }
+            if (keyCode == 10) {
+                game.resume();
+            }
+            if (this.selectedButton < 0) {
+                this.selectedButton += 3;
+            } else if (this.selectedButton > 2) {
+                this.selectedButton -= 3;
             }
         }
-        if (game.isOver()) {
+        if (!game.isOver()) {
+            if (keyCode == DOWN) {
+                if (!game.isPaused()) {
+                    game.pause();
+                }
+            }
+        } else {
             game = new GameEngine();
             game.getPlayer().reset();
         }
