@@ -201,7 +201,7 @@ fi
 
 set -- \
         -classpath "$CLASSPATH" \
-        lawnlayer.App \
+        incoming.App \
         "$@"
 
 # Use "xargs" to parse quoted args.

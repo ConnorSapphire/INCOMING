@@ -117,20 +117,25 @@ public class App extends PApplet {
         this.explode = null;
         AudioInputStream explodeStream = null;
         try {
-            this.music = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
             musicStream = AudioSystem.getAudioInputStream(musicFile);
+            DataLine.Info musicInfo = new DataLine.Info(Clip.class, musicStream.getFormat());
+            this.music = (Clip) AudioSystem.getLine(musicInfo);
             this.music.open(musicStream);
-            this.select = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
             selectStream = AudioSystem.getAudioInputStream(selectFile);
+            DataLine.Info selectInfo = new DataLine.Info(Clip.class, selectStream.getFormat());
+            this.select = (Clip) AudioSystem.getLine(selectInfo);
             this.select.open(selectStream);
-            this.shoot = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
             shootStream = AudioSystem.getAudioInputStream(shootFile);
+            DataLine.Info shootInfo = new DataLine.Info(Clip.class, shootStream.getFormat());
+            this.shoot = (Clip) AudioSystem.getLine(shootInfo);
             this.shoot.open(shootStream);
-            this.hurt = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
             hurtStream = AudioSystem.getAudioInputStream(hurtFile);
+            DataLine.Info hurtInfo = new DataLine.Info(Clip.class, hurtStream.getFormat());
+            this.hurt = (Clip) AudioSystem.getLine(hurtInfo);
             this.hurt.open(hurtStream);
-            this.explode = AudioSystem.getClip(AudioSystem.getMixerInfo()[0]);
             explodeStream = AudioSystem.getAudioInputStream(explodeFile);
+            DataLine.Info explodeInfo = new DataLine.Info(Clip.class, explodeStream.getFormat());
+            this.explode = (Clip) AudioSystem.getLine(explodeInfo);
             this.explode.open(explodeStream);
         } catch(LineUnavailableException | UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();

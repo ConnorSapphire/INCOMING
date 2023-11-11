@@ -71,7 +71,7 @@ set CLASSPATH=%APP_HOME%\lib\INCOMING-1.0.jar;%APP_HOME%\lib\guava-28.0-jre.jar;
 
 
 @rem Execute INCOMING
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %INCOMING_OPTS%  -classpath "%CLASSPATH%" lawnlayer.App %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %INCOMING_OPTS%  -classpath "%CLASSPATH%" incoming.App %*
 
 :end
 @rem End local scope for the variables with windows NT shell
